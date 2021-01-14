@@ -21,7 +21,6 @@ def main():
     parser = create_args()
     args = parser.parse_args()
     response = requests.get('http://' + args.get + '/api/v4/users?private_token=' + args.token)
-    print(response.status_code)
 
     if response.status_code == 200:
         for user in response.json():
@@ -29,7 +28,7 @@ def main():
             for param in user:
                 print(str(param) + ': ' + str(user[param]))
     else:
-        print('Ошибка')
+        print('Ошибка: ' + str(response.status_code))
 
 
 if __name__ == '__main__':

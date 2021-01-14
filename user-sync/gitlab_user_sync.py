@@ -1,5 +1,8 @@
-import requests
+"""
+Скрипт выгрузки списка пользователей gitlab
+"""
 import argparse
+import requests
 
 def create_args():
     """Создание аргументов командной строки"""

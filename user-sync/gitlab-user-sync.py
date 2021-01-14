@@ -24,8 +24,10 @@ def main():
     print(response.status_code)
 
     if response.status_code == 200:
-        print('Усепх')
-        print(response.json())
+        for user in response.json():
+            print()
+            for param in user:
+                print(str(param) + ': ' + str(user[param]))
     else:
         print('Ошибка')
 

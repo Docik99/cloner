@@ -4,6 +4,7 @@
 import argparse
 import requests
 
+
 def create_args():
     """Создание аргументов командной строки"""
     parser = argparse.ArgumentParser()
@@ -18,6 +19,7 @@ def create_args():
         type=str,
     )
     return parser
+
 
 def get_user():
     """Вывод списка пользователей gitlab"""

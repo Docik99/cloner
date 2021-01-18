@@ -19,7 +19,7 @@ def create_args():
     )
     return parser
 
-def main():
+def get_user():
     """Вывод списка пользователей gitlab"""
     parser = create_args()
     args = parser.parse_args()
@@ -35,4 +35,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    get_user()

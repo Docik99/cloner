@@ -21,10 +21,8 @@ def create_args():
     return parser
 
 
-def get_user():
+def get_user(args):
     """Вывод списка пользователей gitlab"""
-    parser = create_args()
-    args = parser.parse_args()
     response = requests.get('http://' + args.get + '/api/v4/users?private_token=' + args.token)
 
     if response.status_code == 200:
@@ -32,9 +30,13 @@ def get_user():
             print()
             for param in user:
                 print(str(param) + ': ' + str(user[param]))
+        return 0
     else:
         print('Ошибка: ' + str(response.status_code))
+        return 1
 
 
 if __name__ == '__main__':
-    get_user()
+    parsers = create_args()
+    args = parsers.parse_args()
+    get_user(args)

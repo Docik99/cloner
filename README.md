@@ -6,16 +6,9 @@
 
 #### Запуск образа
 
-`$ docker run cloner -g hostname -t root-token`
+`$ docker run cloner -g https://gitwork.ru -t yhQvz2QsqXbxakY-zEqC`
 
-Где **hostname** и **root-token** нужно заменить на необходимые значения
-
-Примеры записи _hostname_: 
-
-https://gitwork.ru
-
-http://localhost:10080 
-
+Где  **yhQvz2QsqXbxakY-zEqC** токен root пользователя, а **https://gitwork.ru** адрес хоста
 ##### Для запуска pylint
 
 `$ pylint gitlab_user_sync.py`

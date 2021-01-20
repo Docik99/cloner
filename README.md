@@ -2,11 +2,11 @@
 
 #### Создание образа
 
-`$ docker build -t git-usr-sync .`
+`$ docker build -t cloner .`
 
 #### Заупск образа
 
-`$ docker run git-usr-sync -g hostname -t root-token`
+`$ docker run cloner -g hostname -t root-token`
 
 Где **hostname** и **root-token** нужно заменить на необходимые значения
 

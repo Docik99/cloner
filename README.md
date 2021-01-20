@@ -4,7 +4,7 @@
 
 `$ docker build -t cloner .`
 
-#### Заупск образа
+#### Запуск образа
 
 `$ docker run cloner -g hostname -t root-token`
 

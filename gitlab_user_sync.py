@@ -1,5 +1,8 @@
 """
 Скрипт выгрузки списка пользователей gitlab
+
+Пример запуска:
+python3 gitlab_user_sync.py -g http://localhost:10080 -t yhQvz2QsqXbxakY-zEqC
 """
 import argparse
 import requests

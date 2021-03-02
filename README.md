@@ -12,3 +12,7 @@
 ##### Для запуска pylint
 
 `$ pylint gitlab_user_sync.py`
+
+##### Для запуска тестов
+
+`$ nosetests --with-coverage --cover-package=gitlab_user_sync`

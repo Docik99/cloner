@@ -6,6 +6,8 @@ python3 gitlab_user_sync.py -g http://localhost:10080 -t yhQvz2QsqXbxakY-zEqC
 """
 import argparse
 import requests
+import json
+from prettytable import PrettyTable
 
 
 def create_args():
@@ -26,15 +28,19 @@ def create_args():
 
 def get_user(arg):
     """Вывод списка пользователей gitlab"""
-    response = requests.get(arg.get + '/api/v4/users?private_token=' + arg.token)
+    response = requests.get(arg.get + "/api/v4/users?private_token=" + arg.token)
 
     if response.status_code == 200:
-        for user in response.json():
-            print()
-            for param in user:
-                print(str(param) + ': ' + str(user[param]))
+        todos = json.loads(response.text)
+        head = ['id', 'username', 'name']
+        table = PrettyTable(head)
+        for todo in todos:
+            body = [todo['id'], todo['username'], todo['name']]
+            table.add_row(body)
+        print(table)
+
     else:
-        print('Ошибка: ' + str(response.status_code))
+        print("Ошибка: " + str(response.status_code))
 
 
 def main():

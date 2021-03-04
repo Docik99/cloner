@@ -34,10 +34,15 @@ def get_user(arg):
         todos = json.loads(response.text)
         head = ['id', 'username', 'name']
         table = PrettyTable(head)
+        other_web_url = 0
         for todo in todos:
             body = [todo['id'], todo['username'], todo['name']]
             table.add_row(body)
+            if todo['web_url'].find("gitwork.ru") == -1:
+                other_web_url += 1
+
         print(table)
+        print("Количество пользователей с web_url, отличающимся от gitwork.ru ---> " + str(other_web_url))
 
     else:
         print("Ошибка: " + str(response.status_code))

@@ -7,6 +7,7 @@ python3 gitlab_user_sync.py -g http://localhost:10080 -t yhQvz2QsqXbxakY-zEqC
 import argparse
 import requests
 import json
+import gitlab
 from prettytable import PrettyTable
 
 
@@ -21,6 +22,11 @@ def create_args():
     parser.add_argument(
         '-t', '--token',
         help='input root_token',
+        type=str,
+    )
+    parser.add_argument(
+        '-s', '--set',
+        help='input hostname',
         type=str,
     )
     return parser
@@ -47,12 +53,22 @@ def get_user(arg):
     else:
         print("Ошибка: " + str(response.status_code))
 
+def set_user(arg):
+    response = requests.post(arg.set + '/api/v4/users?private_token=' + arg.token, {'email':'lox2@gitwork.ru', 'name':'lox2', 'username':'lox2', 'password':'12345678'}) # через стандартные запросы
+    print(response.status_code)
+
+    # с использованием библиотеки gitlab
+    # gl = gitlab.Gitlab(arg.set, private_token=arg.token)
+    # user = gl.users.create({'email': 'pervonah@gitwork.ru', 'password': '12345678',
+    #                         'username': 'lox',
+    #                         'name': 'pervonah'})
 
 def main():
     """Передача аргументов командной строки исполняемой функции"""
     parsers = create_args()
     args = parsers.parse_args()
-    get_user(args)
+    if args.get is not None: get_user(args)
+    if args.set is not None: set_user(args)
 
 
 if __name__ == '__main__':

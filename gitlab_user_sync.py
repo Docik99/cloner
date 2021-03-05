@@ -32,7 +32,7 @@ def get_user(arg):
 
     if response.status_code == 200:
         todos = json.loads(response.text)
-        head = ['id', 'username', 'name']
+        head = ['id', 'fullname (username)', 'login (name)']
         table = PrettyTable(head)
         other_web_url = 0
         for todo in todos:

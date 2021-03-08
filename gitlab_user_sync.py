@@ -93,7 +93,7 @@ def set_user(arg):
                                  {'email': todo['email'], 'name': todo['name'], 'username': todo['username'],
                                   'password': password})
         if response.status_code == 201:
-
+            print(todo['name'] + ' : ' + password)
         else:
             print("Ошибка: " + str(response.status_code))
 

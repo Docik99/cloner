@@ -57,9 +57,10 @@ def get_user(arg):
         head = ['id', 'login (name)', 'fullname (username)']
         table = PrettyTable(head)
         other_web_url = 0
-        f_json = open("out of users.json", "w")
+        f_json = open("out_of_users.json", "w")
         f_json.write('[')
         counter = 0
+
         for todo in todos:
             counter += 1
             data = {'email': todo['email'], 'name': todo['name'], 'username': todo['username']}
@@ -74,7 +75,7 @@ def get_user(arg):
                 other_web_url += 1
 
         f_json.write(']')
-        f_txt = open('out of users.txt', 'w')
+        f_txt = open('out_of_users.txt', 'w')
         f_txt.write(str(table))
         print(table)
         print("Количество пользователей с web_url, отличающимся от gitwork.ru ---> " + str(other_web_url))
@@ -104,10 +105,6 @@ def set_user(arg):
 
     else:
         print("Ошибка: " + str(response.status_code))
-
-    # с использованием библиотеки gitlab
-    # gl = gitlab.Gitlab(arg.set, private_token = arg.token)
-    # user = gl.users.create({'email': 'pervonah@gitwork.ru', 'password': '12345678', 'username': 'lox', 'name': 'pervonah'})
 
 
 def main():

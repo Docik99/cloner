@@ -85,26 +85,17 @@ def get_user(arg):
 
 
 def set_user(arg):
-    f = open(arg.file, 'r')
-    password = generate_pass()
-    response = requests.post(arg.set + '/api/v4/users?private_token=' + arg.token,
-                             {'email': 'lox4@gitwork.ru', 'name': 'lox4', 'username': 'lox4',
-                              'password': password})
-    if response.status_code == 201:
-        todos = json.loads(response.text)
-        head = ['id', 'fullname (username)', 'login (name)']
-        table = PrettyTable(head)
-        other_web_url = 0
-        for todo in todos:
-            body = [todo['id'], todo['username'], todo['name']]
-            table.add_row(body)
-            if todo['web_url'].find("gitwork.ru") == -1:
-                other_web_url += 1
+    f_json = open(arg.file, 'r')
+    todos = json.load(f_json)
+    for todo in todos:
+        password = generate_pass()
+        response = requests.post(arg.set + '/api/v4/users?private_token=' + arg.token,
+                                 {'email': todo['email'], 'name': todo['name'], 'username': todo['username'],
+                                  'password': password})
+        if response.status_code == 201:
 
-        print(table)
-
-    else:
-        print("Ошибка: " + str(response.status_code))
+        else:
+            print("Ошибка: " + str(response.status_code))
 
 
 def main():

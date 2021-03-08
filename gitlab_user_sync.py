@@ -57,15 +57,23 @@ def get_user(arg):
         head = ['id', 'login (name)', 'fullname (username)']
         table = PrettyTable(head)
         other_web_url = 0
+        f_json = open("out of users.json", "w")
+        f_json.write('[')
+        counter = 0
         for todo in todos:
-            data = {'email':todo['email'], 'name': todo['name'], 'username': todo['username']}
-            f_json = open("data_file.json", "a")
+            counter += 1
+            data = {'email': todo['email'], 'name': todo['name'], 'username': todo['username']}
             json.dump(data, f_json)
+            if counter != len(todos): #чтобы в конце не было запятой
+                f_json.write(',')
+
             body = [todo['id'], todo['name'], todo['username']]
             table.add_row(body)
+
             if todo['web_url'].find("gitwork.ru") == -1:
                 other_web_url += 1
 
+        f_json.write(']')
         f_txt = open('out of users.txt', 'w')
         f_txt.write(str(table))
         print(table)

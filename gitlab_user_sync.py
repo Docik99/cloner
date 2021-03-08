@@ -58,17 +58,15 @@ def set_user(arg):
     print(response.status_code)
 
     # с использованием библиотеки gitlab
-    # gl = gitlab.Gitlab(arg.set, private_token=arg.token)
-    # user = gl.users.create({'email': 'pervonah@gitwork.ru', 'password': '12345678',
-    #                         'username': 'lox',
-    #                         'name': 'pervonah'})
+    gl = gitlab.Gitlab(arg.set, private_token = arg.token)
+    user = gl.users.create({'email': 'pervonah@gitwork.ru', 'password': '12345678', 'username': 'lox', 'name': 'pervonah'})
 
 def main():
     """Передача аргументов командной строки исполняемой функции"""
     parsers = create_args()
     args = parsers.parse_args()
     if args.get is not None: get_user(args)
-    if args.set is not None: set_user(args)
+    elif args.set is not None: set_user(args)
 
 
 if __name__ == '__main__':

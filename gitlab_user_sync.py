@@ -87,15 +87,29 @@ def get_user(arg):
 def set_user(arg):
     f_json = open(arg.file, 'r')
     todos = json.load(f_json)
+    pass_json = open('users-pass.json', 'w')
+    pass_json.write('[')
+    counter = 0
+
     for todo in todos:
         password = generate_pass()
         response = requests.post(arg.set + '/api/v4/users?private_token=' + arg.token,
                                  {'email': todo['email'], 'name': todo['name'], 'username': todo['username'],
                                   'password': password})
         if response.status_code == 201:
+            counter += 1
+            #должен быть вывод в файл
+            data = {'username': todo['username'], 'password': password}
+            json.dump(data, pass_json)
+            if counter != len(todos):  # чтобы в конце не было запятой
+                pass_json.write(',')
+
             print(todo['username'] + ' : ' + password)
+
         else:
             print("Ошибка: " + str(response.status_code))
+
+    pass_json.write(']')
 
 
 def main():

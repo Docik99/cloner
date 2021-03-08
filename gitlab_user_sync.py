@@ -98,7 +98,6 @@ def set_user(arg):
                                   'password': password})
         if response.status_code == 201:
             counter += 1
-            #должен быть вывод в файл
             data = {'username': todo['username'], 'password': password}
             json.dump(data, pass_json)
             if counter != len(todos):  # чтобы в конце не было запятой

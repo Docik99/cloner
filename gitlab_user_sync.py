@@ -62,7 +62,7 @@ def get_user(arg):
 
         for todo in todos:
             counter += 1
-            data = {'email': todo['email'], 'name': todo['name'], 'username': todo['username']}
+            data = {'id': todo['id'], 'email': todo['email'], 'name': todo['name'], 'username': todo['username']}
             json.dump(data, f_json)
             if counter != len(todos): #чтобы в конце не было запятой
                 f_json.write(',')

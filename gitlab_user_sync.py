@@ -7,7 +7,6 @@ python3 gitlab_user_sync.py -g http://localhost:10080 -t yhQvz2QsqXbxakY-zEqC
 import argparse
 import requests
 import json
-import gitlab
 from prettytable import PrettyTable
 import random
 
@@ -95,7 +94,7 @@ def set_user(arg):
         password = generate_pass()
         response = requests.post(arg.set + '/api/v4/users?private_token=' + arg.token,
                                  {'email': todo['email'], 'name': todo['name'], 'username': todo['username'],
-                                  'password': password})
+                                  'password': password, 'skip_confirmation': 'true'})
         if response.status_code == 201:
             counter += 1
             data = {'username': todo['username'], 'password': password}

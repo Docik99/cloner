@@ -49,7 +49,7 @@ def create_args():
 
 def get_user(arg):
     """Вывод списка пользователей gitlab"""
-    response = requests.get(arg.get + "/api/v4/users?private_token=" + arg.token)
+    response = requests.get(arg.get + "/api/v4/users?private_token=" + arg.token + "&per_page=100")
 
     if response.status_code == 200:
         todos = json.loads(response.text)

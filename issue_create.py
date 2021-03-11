@@ -30,12 +30,11 @@ def create_issue(arg):
     for todo in todos:
         response = requests.get(arg.serv + "/api/v4/users/" + str(todo['username']) + "/projects/?private_token=" + arg.token + "&simple=true")
         if response.status_code == 200:
-            todoss = json.loads(response.text)
-            for tod in todoss:
-                print(tod)
+            projects = json.loads(response.text)
+            for project in projects:
+                if project['name'] == 'timp': print(project['id'])
         else:
             print(response.status_code)
-            # нужно найти id проекта тимп у нужного пользователя а затем по этому id создать ишью
 
 def main():
     """Передача аргументов командной строки исполняемой функции"""

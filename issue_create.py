@@ -18,7 +18,7 @@ def create_args():
         type=str,
     )
     parser.add_argument(
-        '-f', '--file',
+        '-fu', '--file',
         help='input way to file',
         type=str,
     )
@@ -36,9 +36,9 @@ def create_issue(arg):
             for project in projects:
                 if project['name'] == 'timp':
                     print(project['id'])
-                    new_issue = requests.post(arg.serv + "/api/v4/projects/" + str(project['id']) + "/issues/?private_token=" + arg.token, {'title': 'you new password', 'description': '1234password'})
+                    new_issue = requests.post(arg.serv + "/api/v4/projects/" + str(project['id']) + "/issues/?private_token=" + arg.token, {'title': 'you new password', 'description': todo['password']})
                     if new_issue.status_code == 201:
-                        print('Успех!')
+                        print('Успех, новое ишью создано!')
                     else:
                         print('Ошибка: ' + str(new_issue.status_code))
         else:

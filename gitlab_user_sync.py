@@ -53,7 +53,7 @@ def get_user(arg):
 
     if response.status_code == 200:
         todos = json.loads(response.text)
-        head = ['id', 'login (name)', 'fullname (username)']
+        head = ['login (name)', 'fullname (username)']
         table = PrettyTable(head)
         other_web_url = 0
         f_json = open("out_of_users.json", "w")
@@ -62,12 +62,12 @@ def get_user(arg):
 
         for todo in todos:
             counter += 1
-            data = {'id': todo['id'], 'email': todo['email'], 'name': todo['name'], 'username': todo['username']}
+            data = {'email': todo['email'], 'name': todo['name'], 'username': todo['username']}
             json.dump(data, f_json)
             if counter != len(todos): #чтобы в конце не было запятой
                 f_json.write(',')
 
-            body = [todo['id'], todo['name'], todo['username']]
+            body = [todo['name'], todo['username']]
             table.add_row(body)
 
             if todo['web_url'].find("gitwork.ru") == -1:

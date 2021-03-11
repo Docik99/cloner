@@ -3,6 +3,7 @@ import argparse
 import requests
 import json
 
+
 def create_args():
     """Создание аргументов командной строки"""
     parser = argparse.ArgumentParser()
@@ -28,13 +29,16 @@ def create_issue(arg):
     f_json = open(arg.file, 'r')
     todos = json.load(f_json)
     for todo in todos:
-        response = requests.get(arg.serv + "/api/v4/users/" + str(todo['username']) + "/projects/?private_token=" + arg.token + "&simple=true")
+        response = requests.get(arg.serv + "/api/v4/users/" + str(
+            todo['username']) + "/projects/?private_token=" + arg.token + "&simple=true")
         if response.status_code == 200:
             projects = json.loads(response.text)
             for project in projects:
-                if project['name'] == 'timp': print(project['id'])
+                if project['name'] == 'timp':
+                    print(project['id'])
         else:
             print(response.status_code)
+
 
 def main():
     """Передача аргументов командной строки исполняемой функции"""

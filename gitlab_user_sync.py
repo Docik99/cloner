@@ -4,11 +4,11 @@
 Пример запуска:
 python3 gitlab_user_sync.py -g http://localhost:10080 -t yhQvz2QsqXbxakY-zEqC
 """
+import random
+import json
 import argparse
 import requests
-import json
 from prettytable import PrettyTable
-import random
 
 
 def generate_pass():
@@ -16,7 +16,7 @@ def generate_pass():
     chars = '+-/*!&$#?=@<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     length = 10  # длина пароля
     password = ''
-    for n in range(length):
+    while len(password) != range(length):
         password += random.choice(chars)
     return password
 
@@ -84,6 +84,7 @@ def get_user(arg):
 
 
 def set_user(arg):
+    """Создание новых пользователей по данным из json файла"""
     f_json = open(arg.file, 'r')
     todos = json.load(f_json)
     pass_json = open('users-pass.json', 'w')

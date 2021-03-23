@@ -4,6 +4,6 @@ COPY . .
 
 RUN pip install requests && pip install PrettyTable
 
-ENTRYPOINT [ "python", "./gitlab_user_sync.py" ]
+ENTRYPOINT ["python"]
 
 CMD  []

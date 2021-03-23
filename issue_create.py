@@ -1,6 +1,12 @@
+"""
+Скрипт создания issue с паролем для пользователя в репозитории timp
+
+python3 issue_create.py -s https://gitwork.ru -t AzJqh2AKxVC_Wj9pn_T8 -f users-pass.json
+"""
+
+import json
 import argparse
 import requests
-import json
 
 
 def create_args():
@@ -25,6 +31,7 @@ def create_args():
 
 
 def create_issue(arg):
+    """Создание issue в репе timp"""
     f_json = open(arg.file, 'r')
     todos = json.load(f_json)
     for todo in todos:

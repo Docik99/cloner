@@ -20,7 +20,7 @@ def generate_pass(length):
             password += random.choice(chars)
         return password
     else:
-        raise Exception("Length of password must be > 0")
+        raise Exception("Length of password must be int > 0")
 
 
 def create_args():

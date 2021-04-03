@@ -11,12 +11,11 @@ import requests
 from prettytable import PrettyTable
 
 
-def generate_pass():
+def generate_pass(length):
     """Создание пароля"""
     chars = '+-/*!&$#?=@<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-    length = 10  # длина пароля
     password = ''
-    while len(password) != range(length):
+    while len(password) != length:
         password += random.choice(chars)
     return password
 
@@ -92,7 +91,7 @@ def set_user(arg):
     counter = 0
 
     for todo in todos:
-        password = generate_pass()
+        password = generate_pass(10)
         response = requests.post(arg.set + '/api/v4/users?private_token=' + arg.token,
                                  {'email': todo['email'], 'name': todo['name'], 'username': todo['username'],
                                   'password': password, 'skip_confirmation': 'true'})

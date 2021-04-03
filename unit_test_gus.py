@@ -24,7 +24,21 @@ class ParserTest(unittest.TestCase):
             else:
                 self.assertEqual(args.token, 'TestArg' + str(i))
 
-    def test_pass(self):
+
+class PasswordTest(unittest.TestCase):
+    """Класс тестов для функции создания пароля"""
+
+    def correct_pass(self):
         """Проверка генерации пароля заданной длины"""
         pas = gitlab_user_sync.generate_pass(5)
         self.assertEqual(5, len(pas))
+
+    def negative_pass(self):
+        self.assertRaises(Exception, gitlab_user_sync.generate_pass(-5))
+
+    def str_pass(self):
+        self.assertRaises(Exception, gitlab_user_sync.generate_pass("stroka"))
+
+
+if __name__ == '__main__':
+    unittest.main()

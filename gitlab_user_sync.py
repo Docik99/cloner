@@ -49,6 +49,19 @@ def create_args():
     return parser
 
 
+def create_file(file_name, file_format, data):
+    if file_format == 'json':
+        f_json = open(f"{file_name}.{file_format}", "w")
+        json.dump(data, f_json)
+
+    elif file_format == 'txt':
+        f_txt = open(f"{file_name}.{file_format}", 'w')
+        f_txt.write(str(data))
+
+    else:
+        raise Exception("The file format must be json or txt")
+
+
 def get_user(arg):
     """Вывод списка пользователей gitlab"""
     response = requests.get(f"{arg.get}/api/v4/users?private_token={arg.token}&per_page=100")
@@ -58,12 +71,9 @@ def get_user(arg):
         head = ['login (name)', 'fullname (username)']
         table = PrettyTable(head)
         other_web_url = 0
-        f_json = open("out_of_users.json", "w")
         data_w = []
-        counter = 0
 
         for todo in todos:
-            counter += 1
             data_w.append({'email': todo['email'], 'name': todo['name'], 'username': todo['username']})
 
             body = [todo['name'], todo['username']]
@@ -72,10 +82,7 @@ def get_user(arg):
             if todo['web_url'].find("gitwork.ru") == -1:
                 other_web_url += 1
 
-        json.dump(data_w, f_json)
-        f_txt = open('out_of_users.txt', 'w')
-        f_txt.write(str(table))
-        return table, other_web_url
+        return table, data_w, other_web_url
 
     else:
         raise Exception(f"Ошибка: {str(response.status_code)}")
@@ -85,9 +92,7 @@ def set_user(arg):
     """Создание новых пользователей по данным из json файла"""
     f_json = open(arg.file, 'r')
     todos = json.load(f_json)
-    pass_json = open('users-pass.json', 'w')
-    data_w= []
-    counter = 0
+    data_w = []
 
     for todo in todos:
         password = generate_pass(10)
@@ -95,14 +100,12 @@ def set_user(arg):
                                  {'email': todo['email'], 'name': todo['name'], 'username': todo['username'],
                                   'password': password, 'skip_confirmation': 'true'})
         if response.status_code == 201:
-            counter += 1
             data_w.append({'username': todo['username'], 'password': password})
             print(f"{todo['username']} : {password}")
-
         else:
             raise Exception(f"Ошибка: {str(response.status_code)}")
 
-    json.dump(data_w, pass_json)
+    return data_w
 
 
 def main():
@@ -110,11 +113,13 @@ def main():
     parsers = create_args()
     args = parsers.parse_args()
     if args.get is not None:
-        table, other_url = get_user(args)
+        table, user_data, other_url = get_user(args)
+        create_file('out_of_users', 'json', user_data)
+        create_file('out_of_users', 'txt', table)
         print(table)
         print(f"Количество пользователей с web_url, отличающимся от gitwork.ru ---> {str(other_url)}")
     elif args.set is not None:
-        set_user(args)
+        create_file('users-pass', 'json', set_user(args))
 
 
 if __name__ == '__main__':

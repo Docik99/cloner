@@ -13,14 +13,15 @@ from prettytable import PrettyTable
 
 def generate_pass(length):
     """Создание пароля"""
-    if length > 0:
-        chars = '+-/*!&$#?=@<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-        password = ''
-        while len(password) != length:
-            password += random.choice(chars)
-        return password
-    else:
+    if length <= 0:
         raise Exception("Length of password must be int > 0")
+
+    chars = '+-/*!&$#?=@<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+    password = ''
+    while len(password) != length:
+        password += random.choice(chars)
+    return password
+
 
 
 def create_args():

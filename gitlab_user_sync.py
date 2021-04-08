@@ -62,27 +62,31 @@ def create_file(file_name, file_format, data):
         raise Exception("The file format must be json or txt")
 
 
+def create_table(data):
+    head = ['email', 'login (name)', 'fullname (username)']
+    table = PrettyTable(head)
+    for user in data:
+        body = [user['email'], user['name'], user['username']]
+        table.add_row(body)
+    return table
+
+
 def get_user(arg):
     """Вывод списка пользователей gitlab"""
     response = requests.get(f"{arg.get}/api/v4/users?private_token={arg.token}&per_page=100")
 
     if response.status_code == 200:
         todos = json.loads(response.text)
-        head = ['login (name)', 'fullname (username)']
-        table = PrettyTable(head)
         other_web_url = 0
         data_w = []
 
         for todo in todos:
             data_w.append({'email': todo['email'], 'name': todo['name'], 'username': todo['username']})
 
-            body = [todo['name'], todo['username']]
-            table.add_row(body)
-
             if todo['web_url'].find("gitwork.ru") == -1:
                 other_web_url += 1
 
-        return table, data_w, other_web_url
+        return data_w, other_web_url
 
     else:
         raise Exception(f"Ошибка: {str(response.status_code)}")
@@ -113,7 +117,8 @@ def main():
     parsers = create_args()
     args = parsers.parse_args()
     if args.get is not None:
-        table, user_data, other_url = get_user(args)
+        user_data, other_url = get_user(args)
+        table = create_table(user_data)
         create_file('out_of_users', 'json', user_data)
         create_file('out_of_users', 'txt', table)
         print(table)

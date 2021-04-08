@@ -82,7 +82,8 @@ def get_user(arg):
         data_w = []
 
         for todo in todos:
-            data_w.append({'email': todo['email'], 'name': todo['name'], 'username': todo['username']})
+            data_w.append({'email': todo['email'], 'name': todo['name'],
+                           'username': todo['username']})
 
             if todo['web_url'].find("gitwork.ru") == -1:
                 other_web_url += 1
@@ -102,8 +103,9 @@ def set_user(arg):
     for todo in todos:
         password = generate_pass(10)
         response = requests.post(f"{arg.set}/api/v4/users?private_token={arg.token}",
-                                 {'email': todo['email'], 'name': todo['name'], 'username': todo['username'],
-                                  'password': password, 'skip_confirmation': 'true'})
+                                 {'email': todo['email'], 'name': todo['name'],
+                                  'username': todo['username'], 'password': password,
+                                  'skip_confirmation': 'true'})
         if response.status_code == 201:
             data_w.append({'username': todo['username'], 'password': password})
             print(f"{todo['username']} : {password}")
@@ -123,7 +125,8 @@ def main():
         create_file('out_of_users', 'json', user_data)
         create_file('out_of_users', 'txt', table)
         print(table)
-        print(f"Количество пользователей с web_url, отличающимся от gitwork.ru ---> {str(other_url)}")
+        print(f"Количество пользователей с web_url,"
+              f" отличающимся от gitwork.ru ---> {str(other_url)}")
     elif args.set is not None:
         create_file('users-pass', 'json', set_user(args))
 

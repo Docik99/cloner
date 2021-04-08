@@ -7,19 +7,21 @@
 #### Запуск образа
 
 ##### Получение списка пользователей
-`$ docker run cloner gitlab_user_sync.py -g https://gitwork.ru -t yhQvz2QsqXbxakY-zEqC`
+`$ docker run cloner gitlab_user_sync.py -g https://gitlab.ru -t yhQvz2QsqXbxakY-zEqC -f out_file`
+
+out_file.json - файл, в котрый будут выведены данные пользователей (**-f** опциональный флаг)
 
 ##### Создание новых пользователей из данных, содержащихся в файле 
-`$ docker run cloner gitlab_user_sync.py -s https://gitwork.ru-t yhQvz2QsqXbxakY-zEqC -f out_of_users.json`
+`$ docker run cloner gitlab_user_sync.py -s https://gitlab.ru-t yhQvz2QsqXbxakY-zEqC -f users-data`
 
-out_of_users.json - файл, в котрый будут выведены данные пользователей
+users-data.json - файл, содержащий данные, необходимые для создания новых пользователей
 
 ##### Создание issue с новым паролем
-`$ docker run cloner issue_create.py -s https://gitwork.ru -t yhQvz2QsqXbxakY-zEqC -f users-pass.json`
+`$ docker run cloner issue_create.py -s https://gitlab.ru -t yhQvz2QsqXbxakY-zEqC -f users-pass.json`
 
 users-pass.json - файл содержаший пару логин-пароль
 
-Где  **yhQvz2QsqXbxakY-zEqC** токен root пользователя, а **https://gitwork.ru** адрес хоста
+Где  **yhQvz2QsqXbxakY-zEqC** токен root пользователя, а **https://gitlab.ru** адрес хоста (**-g** и **-s** опциональные флаги, по умолчанию: https://gitwork.ru)
 ##### Для запуска pylint
 
 `$ pylint gitlab_user_sync.py`

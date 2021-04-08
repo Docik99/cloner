@@ -76,22 +76,21 @@ def get_user(arg):
     """Вывод списка пользователей gitlab"""
     response = requests.get(f"{arg.get}/api/v4/users?private_token={arg.token}&per_page=100")
 
-    if response.status_code == 200:
-        todos = json.loads(response.text)
-        other_web_url = 0
-        data_w = []
-
-        for todo in todos:
-            data_w.append({'email': todo['email'], 'name': todo['name'],
-                           'username': todo['username']})
-
-            if todo['web_url'].find("gitwork.ru") == -1:
-                other_web_url += 1
-
-        return data_w, other_web_url
-
-    else:
+    if response.status_code != 200:
         raise Exception(f"Ошибка: {str(response.status_code)}")
+
+    todos = json.loads(response.text)
+    other_web_url = 0
+    data_w = []
+
+    for todo in todos:
+        data_w.append({'email': todo['email'], 'name': todo['name'],
+                       'username': todo['username']})
+
+        if todo['web_url'].find("gitwork.ru") == -1:
+            other_web_url += 1
+
+    return data_w, other_web_url
 
 
 def set_user(arg):

@@ -7,6 +7,7 @@ python3 gitlab_user_sync.py -g http://localhost:10080 -t yhQvz2QsqXbxakY-zEqC
 import random
 import json
 import argparse
+
 import requests
 from prettytable import PrettyTable
 

@@ -51,6 +51,7 @@ def create_args():
 
 
 def create_file(file_name, file_format, data):
+    """Создает файл с заданым именем, форматом и записывает туда данные"""
     if file_format == 'json':
         f_json = open(f"{file_name}.{file_format}", "w")
         json.dump(data, f_json)
@@ -64,6 +65,7 @@ def create_file(file_name, file_format, data):
 
 
 def create_table(data):
+    """Создает таблицу с данными пользователей"""
     head = ['email', 'login (name)', 'fullname (username)']
     table = PrettyTable(head)
     for user in data:

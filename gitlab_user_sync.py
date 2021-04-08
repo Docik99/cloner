@@ -123,8 +123,12 @@ def main():
     if args.get is not None:
         user_data, other_url = get_user(args)
         table = create_table(user_data)
-        create_file('out_of_users', 'json', user_data)
-        create_file('out_of_users', 'txt', table)
+        if args.file is None:
+            create_file('out_of_users', 'json', user_data)
+            create_file('out_of_users', 'txt', table)
+        else:
+            create_file(args.file, 'json', user_data)
+            create_file(args.file, 'txt', table)
         print(table)
         print(f"Количество пользователей с web_url,"
               f" отличающимся от gitwork.ru ---> {str(other_url)}")

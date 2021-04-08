@@ -78,11 +78,10 @@ def get_user(arg):
         f_json.write(']')
         f_txt = open('out_of_users.txt', 'w')
         f_txt.write(str(table))
-        print(table)
-        print(f"Количество пользователей с web_url, отличающимся от gitwork.ru ---> {str(other_web_url)}")
+        return table, other_web_url
 
     else:
-        print(f"Ошибка: {str(response.status_code)}")
+        raise Exception(f"Ошибка: {str(response.status_code)}")
 
 
 def set_user(arg):
@@ -108,7 +107,7 @@ def set_user(arg):
             print(f"{todo['username']} : {password}")
 
         else:
-            print(f"Ошибка: {str(response.status_code)}")
+            raise Exception(f"Ошибка: {str(response.status_code)}")
 
     pass_json.write(']')
 
@@ -118,7 +117,9 @@ def main():
     parsers = create_args()
     args = parsers.parse_args()
     if args.get is not None:
-        get_user(args)
+        table, other_url = get_user(args)
+        print(table)
+        print(f"Количество пользователей с web_url, отличающимся от gitwork.ru ---> {str(other_url)}")
     elif args.set is not None:
         set_user(args)
 

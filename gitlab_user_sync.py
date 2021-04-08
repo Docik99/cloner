@@ -23,7 +23,6 @@ def generate_pass(length):
     return password
 
 
-
 def create_args():
     """Создание аргументов командной строки"""
     parser = argparse.ArgumentParser()
@@ -52,7 +51,7 @@ def create_args():
 
 def get_user(arg):
     """Вывод списка пользователей gitlab"""
-    response = requests.get(arg.get + "/api/v4/users?private_token=" + arg.token + "&per_page=100")
+    response = requests.get(f"{arg.get}/api/v4/users?private_token={arg.token}&per_page=100")
 
     if response.status_code == 200:
         todos = json.loads(response.text)
@@ -80,10 +79,10 @@ def get_user(arg):
         f_txt = open('out_of_users.txt', 'w')
         f_txt.write(str(table))
         print(table)
-        print("Количество пользователей с web_url, отличающимся от gitwork.ru ---> " + str(other_web_url))
+        print(f"Количество пользователей с web_url, отличающимся от gitwork.ru ---> {str(other_web_url)}")
 
     else:
-        print("Ошибка: " + str(response.status_code))
+        print(f"Ошибка: {str(response.status_code)}")
 
 
 def set_user(arg):
@@ -96,7 +95,7 @@ def set_user(arg):
 
     for todo in todos:
         password = generate_pass(10)
-        response = requests.post(arg.set + '/api/v4/users?private_token=' + arg.token,
+        response = requests.post(f"{arg.set}/api/v4/users?private_token={arg.token}",
                                  {'email': todo['email'], 'name': todo['name'], 'username': todo['username'],
                                   'password': password, 'skip_confirmation': 'true'})
         if response.status_code == 201:
@@ -106,10 +105,10 @@ def set_user(arg):
             if counter != len(todos):  # чтобы в конце не было запятой
                 pass_json.write(',')
 
-            print(todo['username'] + ' : ' + password)
+            print(f"{todo['username']} : {password}")
 
         else:
-            print("Ошибка: " + str(response.status_code))
+            print(f"Ошибка: {str(response.status_code)}")
 
     pass_json.write(']')
 

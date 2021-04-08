@@ -59,15 +59,12 @@ def get_user(arg):
         table = PrettyTable(head)
         other_web_url = 0
         f_json = open("out_of_users.json", "w")
-        f_json.write('[')
+        data_w = []
         counter = 0
 
         for todo in todos:
             counter += 1
-            data = {'email': todo['email'], 'name': todo['name'], 'username': todo['username']}
-            json.dump(data, f_json)
-            if counter != len(todos): #чтобы в конце не было запятой
-                f_json.write(',')
+            data_w.append({'email': todo['email'], 'name': todo['name'], 'username': todo['username']})
 
             body = [todo['name'], todo['username']]
             table.add_row(body)
@@ -75,7 +72,7 @@ def get_user(arg):
             if todo['web_url'].find("gitwork.ru") == -1:
                 other_web_url += 1
 
-        f_json.write(']')
+        json.dump(data_w, f_json)
         f_txt = open('out_of_users.txt', 'w')
         f_txt.write(str(table))
         return table, other_web_url
@@ -89,7 +86,7 @@ def set_user(arg):
     f_json = open(arg.file, 'r')
     todos = json.load(f_json)
     pass_json = open('users-pass.json', 'w')
-    pass_json.write('[')
+    data_w= []
     counter = 0
 
     for todo in todos:
@@ -99,17 +96,13 @@ def set_user(arg):
                                   'password': password, 'skip_confirmation': 'true'})
         if response.status_code == 201:
             counter += 1
-            data = {'username': todo['username'], 'password': password}
-            json.dump(data, pass_json)
-            if counter != len(todos):  # чтобы в конце не было запятой
-                pass_json.write(',')
-
+            data_w.append({'username': todo['username'], 'password': password})
             print(f"{todo['username']} : {password}")
 
         else:
             raise Exception(f"Ошибка: {str(response.status_code)}")
 
-    pass_json.write(']')
+    json.dump(data_w, pass_json)
 
 
 def main():

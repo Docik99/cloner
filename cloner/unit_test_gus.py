@@ -5,7 +5,7 @@ tests for gitlab_user_sync
 """
 
 import unittest
-import gitlab_user_sync
+from cloner import gitlab_user_sync
 
 
 class ParserTest(unittest.TestCase):

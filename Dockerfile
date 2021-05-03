@@ -1,8 +1,11 @@
 FROM python:3
 
-COPY . .
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN pip install requests && pip install PrettyTable
+COPY ./requirements.txt /
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+COPY ./cloner /
 
 ENTRYPOINT ["python"]
 

@@ -41,10 +41,9 @@ def get_user(arg):
             raise Exception(f"Ошибка: {str(response.status_code)}")
 
         todos = json.loads(response.text)
-        print(len(todos))
-
         for todo in todos:
-            users.append({'id': todo['id'], 'username': todo['username']})
+            if todo['email'] != todo['username'] + '@git.ru':
+                users.append({'id': todo['id'], 'username': todo['username']})
 
         if len(todos) < 100:
             break
@@ -58,11 +57,11 @@ def corect_email(arg, users):
     error_users = []
 
     for user in users:
-        email = user['username'] + '@gitwork.ru'
+        email = user['username'] + '@git.ru'
         if arg.url is not None:
-            response = requests.put(f"{arg.url}/api/v4/users/{user['id']}?private_token={arg.token}&email={email}")
+            response = requests.put(f"{arg.url}/api/v4/users/{user['id']}?private_token={arg.token}", {'email': email})
         else:
-            response = requests.put(f"https://gitwork.ru/api/v4/users/{user['id']}?private_token={arg.token}&email={email}")
+            response = requests.put(f"https://gitwork.ru/api/v4/users/{user['id']}?private_token={arg.token}", {'email': email})
 
         if response.status_code != 200:
             error_users.append({'id': user['id'], 'username': user['username']})
@@ -77,6 +76,7 @@ def main():
     if args.token is not None:
         users = get_user(args)
         error_users = corect_email(args, users)
+        print(f"Email адрес успешно изменен у {len(users) - len(error_users)} пользователей из {len(users)}")
         if len(error_users) != 0:
             print("Список пользователей у которых не удалось изменить email: ")
             for error in error_users:

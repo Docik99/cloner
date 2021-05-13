@@ -44,7 +44,7 @@ def get_user(arg):
         print(len(todos))
 
         for todo in todos:
-            users.append({'username': todo['username']})
+            users.append({'id': todo['id'], 'username': todo['username']})
 
         if len(todos) < 100:
             break
@@ -53,6 +53,12 @@ def get_user(arg):
 
     return users
 
+
+# def corect_email(users):
+#     if arg.url is not None:
+#         response = requests.get(f"{arg.url}/api/v4/users?private_token={arg.token}&page={page}&per_page=100")
+#     else:
+#         response = requests.get(f"https://gitwork.ru/api/v4/users?private_token={arg.token}&page={page}&per_page=100")
 
 def main():
     """Передача аргументов командной строки исполняемой функции"""

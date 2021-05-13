@@ -2,7 +2,7 @@
 Скрипт изменения email пользователей gitlab
 
 Пример запуска:
-python3 email_correcter.py -g http://localhost:10080 -t yhQvz2QsqXbxakY-zEqC
+python3 email_correcter.py -u http://localhost:10080 -t yhQvz2QsqXbxakY-zEqC
 """
 
 import json
@@ -54,18 +54,33 @@ def get_user(arg):
     return users
 
 
-# def corect_email(users):
-#     if arg.url is not None:
-#         response = requests.get(f"{arg.url}/api/v4/users?private_token={arg.token}&page={page}&per_page=100")
-#     else:
-#         response = requests.get(f"https://gitwork.ru/api/v4/users?private_token={arg.token}&page={page}&per_page=100")
+def corect_email(arg, users):
+    error_users = []
+
+    for user in users:
+        email = user['username'] + '@gitwork.ru'
+        if arg.url is not None:
+            response = requests.put(f"{arg.url}/api/v4/users/{user['id']}?private_token={arg.token}&email={email}")
+        else:
+            response = requests.put(f"https://gitwork.ru/api/v4/users/{user['id']}?private_token={arg.token}&email={email}")
+
+        if response.status_code != 200:
+            error_users.append({'id': user['id'], 'username': user['username']})
+
+    return error_users
+
 
 def main():
     """Передача аргументов командной строки исполняемой функции"""
     parsers = create_args()
     args = parsers.parse_args()
     if args.token is not None:
-        get_user(args)
+        users = get_user(args)
+        error_users = corect_email(args, users)
+        if len(error_users) != 0:
+            print("Список пользователей у которых не удалось изменить email: ")
+            for error in error_users:
+                print(error['username'])
     else:
         print("Не введен токен")
 

@@ -35,7 +35,8 @@ def get_user(arg):
         if arg.url is None:
             arg.url = 'https://gitwork.ru'
 
-        response = requests.get(f"{arg.url}/api/v4/users?private_token={arg.token}&page={page}&per_page=100")
+        response = requests.get(f"{arg.url}/api/v4/users?private_token={arg.token}"
+                                f"&page={page}&per_page=100")
 
         if response.status_code != 200:
             raise Exception(f"Ошибка: {str(response.status_code)}")
@@ -63,7 +64,8 @@ def correct_email(arg, users):
         if arg.url is None:
             arg.url = 'https://gitwork.ru'
 
-        response = requests.put(f"{arg.url}/api/v4/users/{user['id']}?private_token={arg.token}", {'email': email})
+        response = requests.put(f"{arg.url}/api/v4/users/{user['id']}?private_token={arg.token}",
+                                {'email': email})
 
         if response.status_code != 200:
             error_users.append({'id': user['id'], 'username': user['username']})
@@ -80,7 +82,8 @@ def main():
             args.url = 'https://gitwork.ru'
         users = get_user(args)
         error_users = correct_email(args, users)
-        print(f"Email адрес успешно изменен у {len(users) - len(error_users)} пользователей из {len(users)}")
+        print(f"Email адрес успешно изменен у {len(users) - len(error_users)}"
+              f" пользователей из {len(users)}")
         if len(error_users) != 0:
             print("Список пользователей у которых не удалось изменить email: ")
             for error in error_users:

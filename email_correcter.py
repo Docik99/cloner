@@ -32,10 +32,10 @@ def get_user(arg):
     page = 1
     users = []
     while True:
-        if arg.url is not None:
-            response = requests.get(f"{arg.url}/api/v4/users?private_token={arg.token}&page={page}&per_page=100")
-        else:
-            response = requests.get(f"https://gitwork.ru/api/v4/users?private_token={arg.token}&page={page}&per_page=100")
+        if arg.url is None:
+            arg.url = 'https://gitwork.ru'
+
+        response = requests.get(f"{arg.url}/api/v4/users?private_token={arg.token}&page={page}&per_page=100")
 
         if response.status_code != 200:
             raise Exception(f"Ошибка: {str(response.status_code)}")
@@ -54,14 +54,16 @@ def get_user(arg):
 
 
 def correct_email(arg, users):
+    """Изменение почты у заданных пользователей"""
     error_users = []
 
     for user in users:
-        email = user['username'] + '@git.ru'
-        if arg.url is not None:
-            response = requests.put(f"{arg.url}/api/v4/users/{user['id']}?private_token={arg.token}", {'email': email})
-        else:
-            response = requests.put(f"https://gitwork.ru/api/v4/users/{user['id']}?private_token={arg.token}", {'email': email})
+        email = user['username'] + '@gitwork.ru'
+
+        if arg.url is None:
+            arg.url = 'https://gitwork.ru'
+
+        response = requests.put(f"{arg.url}/api/v4/users/{user['id']}?private_token={arg.token}", {'email': email})
 
         if response.status_code != 200:
             error_users.append({'id': user['id'], 'username': user['username']})
@@ -74,6 +76,8 @@ def main():
     parsers = create_args()
     args = parsers.parse_args()
     if args.token is not None:
+        if args.url is None:
+            args.url = 'https://gitwork.ru'
         users = get_user(args)
         error_users = correct_email(args, users)
         print(f"Email адрес успешно изменен у {len(users) - len(error_users)} пользователей из {len(users)}")

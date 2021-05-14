@@ -28,7 +28,7 @@ def create_args():
 
 
 def get_user(arg):
-    """Вывод списка пользователей gitlab"""
+    """Формирование списка пользователей с неправильной почтой"""
     page = 1
     users = []
     while True:
@@ -42,7 +42,7 @@ def get_user(arg):
 
         todos = json.loads(response.text)
         for todo in todos:
-            if todo['email'] != todo['username'] + '@git.ru':
+            if todo['email'] != todo['username'] + '@gitwork.ru':
                 users.append({'id': todo['id'], 'username': todo['username']})
 
         if len(todos) < 100:
@@ -53,7 +53,7 @@ def get_user(arg):
     return users
 
 
-def corect_email(arg, users):
+def correct_email(arg, users):
     error_users = []
 
     for user in users:
@@ -75,7 +75,7 @@ def main():
     args = parsers.parse_args()
     if args.token is not None:
         users = get_user(args)
-        error_users = corect_email(args, users)
+        error_users = correct_email(args, users)
         print(f"Email адрес успешно изменен у {len(users) - len(error_users)} пользователей из {len(users)}")
         if len(error_users) != 0:
             print("Список пользователей у которых не удалось изменить email: ")

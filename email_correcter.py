@@ -57,7 +57,7 @@ def correct_email(arg, users):
     error_users = []
 
     for user in users:
-        email = user['username'] + '@gitwork.ru'
+        email = f"{user['username']}@gitwork.ru"
 
         if arg.url is None:
             arg.url = 'https://gitwork.ru'

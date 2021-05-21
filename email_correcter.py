@@ -29,6 +29,7 @@ def create_args():
 
 def get_user(arg):
     """Формирование списка пользователей с неправильной почтой"""
+    users_on_page = 100
     page = 1
     users = []
     while True:
@@ -36,7 +37,7 @@ def get_user(arg):
             arg.url = 'https://gitwork.ru'
 
         response = requests.get(f"{arg.url}/api/v4/users?private_token={arg.token}"
-                                f"&page={page}&per_page=100")
+                                f"&page={page}&per_page={users_on_page}")
 
         if response.status_code != 200:
             raise Exception(f"Ошибка: {str(response.status_code)}")

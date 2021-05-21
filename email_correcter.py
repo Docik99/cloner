@@ -33,9 +33,6 @@ def get_user(arg):
     page = 1
     users = []
     while True:
-        if arg.url is None:
-            arg.url = 'https://gitwork.ru'
-
         response = requests.get(f"{arg.url}/api/v4/users?private_token={arg.token}"
                                 f"&page={page}&per_page={users_on_page}")
 

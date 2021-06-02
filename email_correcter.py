@@ -27,7 +27,7 @@ def create_args():
     return parser
 
 
-def get_user(arg):
+def get_user(arg, domen):
     """Формирование списка пользователей с неправильной почтой"""
     users_on_page = 100
     page = 1
@@ -41,7 +41,7 @@ def get_user(arg):
 
         todos = json.loads(response.text)
         for todo in todos:
-            if todo['email'] != todo['username'] + '@gitwork.ru':
+            if todo['email'] != todo['username'] + domen:
                 users.append({'id': todo['id'], 'username': todo['username']})
 
         if len(todos) < 100:
@@ -52,15 +52,12 @@ def get_user(arg):
     return users
 
 
-def correct_email(arg, users):
+def correct_email(arg, users, domen):
     """Изменение почты у заданных пользователей"""
     error_users = []
 
     for user in users:
-        email = f"{user['username']}@gitwork.ru"
-
-        if arg.url is None:
-            arg.url = 'https://gitwork.ru'
+        email = user['username'] + domen
 
         response = requests.put(f"{arg.url}/api/v4/users/{user['id']}?private_token={arg.token}",
                                 {'email': email})
@@ -75,11 +72,12 @@ def main():
     """Передача аргументов командной строки исполняемой функции"""
     parsers = create_args()
     args = parsers.parse_args()
+    domen = "@popa.RU"
     if args.token is not None:
         if args.url is None:
             args.url = 'https://gitwork.ru'
-        users = get_user(args)
-        error_users = correct_email(args, users)
+        users = get_user(args, domen)
+        error_users = correct_email(args, users, domen)
         print(f"Email адрес успешно изменен у {len(users) - len(error_users)}"
               f" пользователей из {len(users)}")
         if len(error_users) != 0:

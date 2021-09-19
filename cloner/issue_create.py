@@ -43,7 +43,6 @@ def create_issue(arg):
             projects = json.loads(response.text)
             for project in projects:
                 if project['name'] == 'timp':
-                    print(project['id'])
                     new_issue = requests.post(arg.url + "/api/v4/projects/" + str(project['id']) + "/issues/?private_token=" + arg.token, {'title': 'you new password', 'description': todo['password']})
                     if new_issue.status_code == 201:
                         print('Успех, новое ишью создано!')

@@ -76,7 +76,19 @@ users-pass.json - файл, содержаший пару логин-парол�
       -u URL, --url URL  input hostname (default "https://gitwork.ru")
       
 #### Блокировка пользователей по списку
-`$ docker run cloner locker.py -u https://gitlab.ru yhQvz2QsqXbxakY-zEqC`
+`$ docker run cloner locker.py -u https://gitlab.ru yhQvz2QsqXbxakY-zEqC file.json`
+
+    usage: locker.py [-h] [-u URL] token file
+    
+    positional arguments:
+      token              input root_token
+      file               input way to file
+    
+    optional arguments:
+      -h, --help         show this help message and exit
+      -u URL, --url URL  input hostname (default "https://gitwork.ru")
+
+file.json - файл с именами (name) пользователей, которых нужно заблокировать
 
 
 #### Для запуска pylint

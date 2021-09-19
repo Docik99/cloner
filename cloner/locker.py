@@ -51,20 +51,21 @@ def lock_user(arg):
 
     for todo in todos:
         count_users += 1
-        response_get = requests.get(arg.set + '/api/v4/users?username=' + todo['name'])
+        response_get = requests.get(f"{arg.set}/api/v4/users?username={todo['name']}")
         if response_get.status_code == 200:
             datas = json.loads(response_get.text)
             for data in datas:
                 user_id = data['id']
             print(user_id)
         else:
-            print("Error GET: " + str(response_get.status_code))
+            print(f"Error GET: {str(response_get.status_code)}")
 
-        response_post = requests.post(arg.set + '/api/v4/users/' + str(user_id) + '/block?private_token=' + arg.token)
+        response_post = requests.post(f"{arg.set}/api/v4/users/{str(user_id)}"
+                                      f"/block?private_token={arg.token}")
         if response_post.status_code == 201:
             block_users += 1
         else:
-            print("Error POST: " + str(response_post.status_code))
+            print(f"Error POST: {str(response_post.status_code)}")
 
     if count_users == block_users:
         print("All users are block")

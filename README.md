@@ -7,34 +7,42 @@
 #### Запуск образа
 
 ##### Получение списка пользователей
-`$ docker run cloner gitlab_user_sync.py g yhQvz2QsqXbxakY-zEqC -f out_file`
+`$ docker run cloner gitlab_user_sync.py -f out_file g yhQvz2QsqXbxakY-zEqC`
 
-`usage: gitlab_user_sync.py [-h] [-u URL] [-f FILE] operation token
-
-positional arguments:
-  operation             input "g" for get users or "s" for create users
-  token                 input root_token
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -u URL, --url URL     input hostname
-  -f FILE, --file FILE  input way to file (required flag if operation = s)`
-
-###### Флаги:
-
-
--t (--token) Позволяет передать token пользователя, от чьего имени выполняются действия
+    usage: gitlab_user_sync.py [-h] [-u URL] [-f FILE] operation token
+    
+    positional arguments:
+      
+      operation             input "g" for get users or "s" for create users
+      
+      token                 input root_token
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      -u URL, --url URL     input hostname (default https://gitwork.ru)
+      -f FILE, --file FILE  input way to file (required flag if operation = s)
+      
+В качестве **operation** необходимо указать **g**
 
 out_file.json - файл, в котрый будут выведены данные пользователей (**-f** опциональный флаг)
 
 ##### Создание новых пользователей из данных, содержащихся в файле 
-`$ docker run cloner gitlab_user_sync.py -s https://gitlab.ru -t yhQvz2QsqXbxakY-zEqC -f users-data`
+`$ docker run cloner gitlab_user_sync.py -f users-data s yhQvz2QsqXbxakY-zEqC`
 
-###### Флаги:
+    usage: gitlab_user_sync.py [-h] [-u URL] [-f FILE] operation token
+    
+    positional arguments:
+      
+      operation             input "g" for get users or "s" for create users
+      
+      token                 input root_token
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      -u URL, --url URL     input hostname (default https://gitwork.ru)
+      -f FILE, --file FILE  input way to file (required flag if operation = s)
 
--s (--set) Обозначает необходимость создания пользователей
-
--t (--token) Позволяет передать token пользователя, от чьего имени выполняются действия
+В качестве **operation** необходимо указать **s**
 
 users-data.json - файл, содержащий данные, необходимые для создания новых пользователей
 

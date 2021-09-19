@@ -28,18 +28,13 @@ def create_args():
     """Создание аргументов командной строки"""
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '-g', '--get',
-        help='input hostname for get users',
+        'operation',
+        help='input "g" for get users or "s" for create users',
         type=str,
     )
     parser.add_argument(
         'token',
         help='input root_token',
-        type=str,
-    )
-    parser.add_argument(
-        '-s', '--set',
-        help='input hostname for create users',
         type=str,
     )
     parser.add_argument(

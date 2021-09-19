@@ -74,8 +74,7 @@ def main():
     """Передача аргументов командной строки исполняемой функции"""
     parsers = create_args()
     args = parsers.parse_args()
-    if args.set is not None:
-        lock_user(args)
+    lock_user(args)
 
 
 if __name__ == '__main__':

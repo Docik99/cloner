@@ -22,6 +22,7 @@ def create_args():
     parser.add_argument(
         '-u', '--url',
         help='input hostname',
+        default='https://gitwork.ru',
         type=str,
     )
     parser.add_argument(
@@ -98,8 +99,6 @@ def main():
     args = parsers.parse_args()
     domen = "@gitwork.ru"
     if args.token is not None:
-        if args.url is None:
-            args.url = 'https://gitwork.ru'
         users = get_user(args, domen)
         error_users = correct_email(args, users, domen)
         print(f"Email адрес успешно изменен у {len(users) - len(error_users)}"

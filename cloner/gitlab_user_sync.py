@@ -29,7 +29,7 @@ def create_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-g', '--get',
-        help='input hostname',
+        help='input hostname for get users',
         type=str,
     )
     parser.add_argument(
@@ -39,7 +39,7 @@ def create_args():
     )
     parser.add_argument(
         '-s', '--set',
-        help='input hostname',
+        help='input hostname for create users',
         type=str,
     )
     parser.add_argument(

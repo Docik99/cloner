@@ -1,4 +1,8 @@
+"""
+Скрипт блокировки пользователей по списку
 
+Пример запуска: python3 locker.py -u https://host.ru yhQvz2QsqXbxakY-zEqC
+"""
 import json
 import argparse
 
@@ -9,17 +13,18 @@ def create_args():
     """Создание аргументов командной строки"""
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '-s', '--set',
-        help='input hostname',
+        '-u', '--url',
+        help='input hostname (default "https://gitwork.ru")',
+        default='https://gitwork.ru',
         type=str,
     )
     parser.add_argument(
-        '-t', '--token',
+        'token',
         help='input root_token',
         type=str,
     )
     parser.add_argument(
-        '-f', '--file',
+        'file',
         help='input way to file',
         type=str,
     )

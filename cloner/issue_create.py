@@ -23,7 +23,7 @@ def create_args():
         type=str,
     )
     parser.add_argument(
-        '-fu', '--file',
+        '-f', '--file',
         help='input way to file',
         type=str,
     )

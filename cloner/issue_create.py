@@ -1,7 +1,7 @@
 """
 Скрипт создания issue с паролем для пользователя в репозитории timp
 
-python3 issue_create.py -u https://gitwork.ru -t AzJqh2AKxVC_Wj9pn_T8 -f users-pass.json
+python3 issue_create.py -u https://gitwork.ru AzJqh2AKxVC_Wj9pn_T8 users-pass.json
 """
 
 import json
@@ -11,7 +11,12 @@ import requests
 
 
 def create_args():
-    """Создание аргументов командной строки"""
+    """Создание аргументов командной строки
+
+    Возвращаемые значения:
+        parser: парсер введенных аргументов
+
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-u', '--url',
@@ -33,7 +38,12 @@ def create_args():
 
 
 def create_issue(arg):
-    """Создание issue в репе timp"""
+    """Создание issue в репозитории timp
+
+    Аргументы:
+        arg: аргументы командной строки
+
+    """
     f_json = open(arg.file, 'r')
     todos = json.load(f_json)
     for todo in todos:
@@ -45,7 +55,10 @@ def create_issue(arg):
             for project in projects:
                 if project['name'] == 'timp':
                     have_timp = True
-                    new_issue = requests.post(f"{arg.url}/api/v4/projects/{str(project['id'])}/issues/?private_token={arg.token}", {'title': 'you new password', 'description': todo['password']})
+                    new_issue = requests.post(f"{arg.url}/api/v4/projects/{str(project['id'])}"
+                                              f"/issues/?private_token={arg.token}",
+                                              {'title': 'you new password',
+                                               'description': todo['password']})
                     if new_issue.status_code == 201:
                         print('Успех, новое ишью создано!')
                     else:

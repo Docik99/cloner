@@ -33,7 +33,7 @@ def create_args():
         type=str,
     )
     parser.add_argument(
-        '-t', '--token',
+        'token',
         help='input root_token',
         type=str,
     )

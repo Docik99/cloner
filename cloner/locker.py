@@ -1,7 +1,7 @@
 """
 Скрипт блокировки пользователей по списку
 
-Пример запуска: python3 locker.py -u https://host.ru yhQvz2QsqXbxakY-zEqC
+Пример запуска: python3 locker.py -u https://host.ru yhQvz2QsqXbxakY-zEqC file.json
 """
 import json
 import argparse

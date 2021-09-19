@@ -29,7 +29,7 @@
 out_file.json - файл, в котрый будут выведены данные пользователей (**-f** опциональный флаг)
 
 #### Создание новых пользователей из данных, содержащихся в файле
-`$ docker run cloner gitlab_user_sync.py -f users-data s yhQvz2QsqXbxakY-zEqC`
+`$ docker run cloner gitlab_user_sync.py -f users-data.json s yhQvz2QsqXbxakY-zEqC`
 
     usage: gitlab_user_sync.py [-h] [-u URL] [-f FILE] operation token
     

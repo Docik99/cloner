@@ -10,7 +10,12 @@ import requests
 
 
 def create_args():
-    """Создание аргументов командной строки"""
+    """Создание аргументов командной строки
+
+    Возвращаемые значения:
+        parser: парсер введенных аргументов
+
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-u', '--url',
@@ -32,7 +37,12 @@ def create_args():
 
 
 def lock_user(arg):
-    """Блокировка пользователей по данным из json файла"""
+    """Блокировка пользователей по данным из json файла
+
+    Аргументы:
+        arg: аргументы командной строки
+
+    """
     global user_id
     f_json = open(arg.file, 'r') #файл, содержащий name пользователей
     todos = json.load(f_json)

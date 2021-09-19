@@ -1,12 +1,12 @@
 Необходимо открыть терминал по адресу папки с проектом
 
-#### Создание образа
+## Создание образа
 
 `$ docker build -t cloner .`
 
-#### Запуск образа
+## Запуск образа
 
-##### Получение списка пользователей
+#### Получение списка пользователей
 `$ docker run cloner gitlab_user_sync.py -f out_file g yhQvz2QsqXbxakY-zEqC`
 
     usage: gitlab_user_sync.py [-h] [-u URL] [-f FILE] operation token
@@ -24,9 +24,11 @@
       
 В качестве **operation** необходимо указать **g**
 
+**yhQvz2QsqXbxakY-zEqC**  - токен root пользователя
+
 out_file.json - файл, в котрый будут выведены данные пользователей (**-f** опциональный флаг)
 
-##### Создание новых пользователей из данных, содержащихся в файле 
+#### Создание новых пользователей из данных, содержащихся в файле
 `$ docker run cloner gitlab_user_sync.py -f users-data s yhQvz2QsqXbxakY-zEqC`
 
     usage: gitlab_user_sync.py [-h] [-u URL] [-f FILE] operation token
@@ -44,26 +46,47 @@ out_file.json - файл, в котрый будут выведены данны
 
 В качестве **operation** необходимо указать **s**
 
+**yhQvz2QsqXbxakY-zEqC**  - токен root пользователя
+
 users-data.json - файл, содержащий данные, необходимые для создания новых пользователей
 
-##### Создание issue с новым паролем
-`$ docker run cloner issue_create.py -u https://gitlab.ru -t yhQvz2QsqXbxakY-zEqC -f users-pass.json`
+#### Создание issue с новым паролем
+`$ docker run cloner issue_create.py -u https://gitlab.ru yhQvz2QsqXbxakY-zEqC users-pass.json`
 
-Флаги:
+    usage: issue_create.py [-h] [-u URL] token file
+    
+    positional arguments:
+      token              input root_token
+      file               input way to file
+    
+    optional arguments:
+      -h, --help         show this help message and exit
+      -u URL, --url URL  input hostname (default "https://gitwork.ru")
 
--u (--url) Адрес хоста, к которому необходимо подключиться
-
--t (--token) Позволяет передать token пользователя, от чьего имени выполняются действия
-
--f (--file) Позволяет указать путь к файлу
+Где  **yhQvz2QsqXbxakY-zEqC** - токен root пользователя
 
 users-pass.json - файл, содержаший пару логин-пароль
 
-Где  **yhQvz2QsqXbxakY-zEqC** токен root пользователя, а **https://gitlab.ru** адрес хоста (**-g** и **-s** опциональные флаги, по умолчанию: https://gitwork.ru)
-##### Для запуска pylint
+#### Корректировка email у пользователей
+`$ docker run cloner email_correcter.py -u https://gitlab.ru yhQvz2QsqXbxakY-zEqC`
 
+    usage: email_correcter.py [-h] [-u URL] token
+    
+    positional arguments:
+      token              input root_token
+    
+    optional arguments:
+      -h, --help         show this help message and exit
+      -u URL, --url URL  input hostname (default "https://gitwork.ru")
+
+#### Для запуска pylint
 `$ pylint gitlab_user_sync.py`
 
-##### Для запуска тестов
+`$ pylint email_correcter.py`
 
+`$ pylint issue_create.py`
+
+`$ pylint locker.py`
+
+#### Для запуска тестов
 `$ nosetests --with-coverage --cover-package=gitlab_user_sync`

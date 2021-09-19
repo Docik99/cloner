@@ -1,6 +1,8 @@
-import requests
+
 import json
 import argparse
+
+import requests
 
 
 def create_args():

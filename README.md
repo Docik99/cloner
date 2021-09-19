@@ -46,8 +46,6 @@ out_file.json - файл, в котрый будут выведены данны
 
 В качестве **operation** необходимо указать **s**
 
-**yhQvz2QsqXbxakY-zEqC**  - токен root пользователя
-
 users-data.json - файл, содержащий данные, необходимые для создания новых пользователей
 
 #### Создание issue с новым паролем
@@ -63,8 +61,6 @@ users-data.json - файл, содержащий данные, необходи�
       -h, --help         show this help message and exit
       -u URL, --url URL  input hostname (default "https://gitwork.ru")
 
-Где  **yhQvz2QsqXbxakY-zEqC** - токен root пользователя
-
 users-pass.json - файл, содержаший пару логин-пароль
 
 #### Корректировка email у пользователей
@@ -78,6 +74,10 @@ users-pass.json - файл, содержаший пару логин-парол�
     optional arguments:
       -h, --help         show this help message and exit
       -u URL, --url URL  input hostname (default "https://gitwork.ru")
+      
+#### Блокировка пользователей по списку
+`$ docker run cloner locker.py -u https://gitlab.ru yhQvz2QsqXbxakY-zEqC`
+
 
 #### Для запуска pylint
 `$ pylint gitlab_user_sync.py`

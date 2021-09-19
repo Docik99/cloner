@@ -38,18 +38,18 @@ def create_issue(arg):
     todos = json.load(f_json)
     for todo in todos:
         have_timp = False
-        response = requests.get(arg.url + "/api/v4/users/" + str(
-            todo['username']) + "/projects/?private_token=" + arg.token + "&simple=true")
+        response = requests.get(f"{arg.url}/api/v4/users/{str(todo['username'])}"
+                                f"/projects/?private_token={arg.token}&simple=true")
         if response.status_code == 200:
             projects = json.loads(response.text)
             for project in projects:
                 if project['name'] == 'timp':
                     have_timp = True
-                    new_issue = requests.post(arg.url + "/api/v4/projects/" + str(project['id']) + "/issues/?private_token=" + arg.token, {'title': 'you new password', 'description': todo['password']})
+                    new_issue = requests.post(f"{arg.url}/api/v4/projects/{str(project['id'])}/issues/?private_token={arg.token}", {'title': 'you new password', 'description': todo['password']})
                     if new_issue.status_code == 201:
                         print('Успех, новое ишью создано!')
                     else:
-                        print('Ошибка: ' + str(new_issue.status_code))
+                        print(f'Ошибка: {str(new_issue.status_code)}')
             if not have_timp:
                 print(f"У пользователя {todo['username']} отсутствует репозиторий timp!")
         else:

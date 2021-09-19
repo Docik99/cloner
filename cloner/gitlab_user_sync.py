@@ -38,8 +38,14 @@ def create_args():
         type=str,
     )
     parser.add_argument(
+        '-u', '--url',
+        help='input hostname',
+        default='https://gitwork.ru',
+        type=str,
+    )
+    parser.add_argument(
         '-f', '--file',
-        help='input way to file',
+        help='input way to file (required flag if operation = s)',
         type=str,
     )
     return parser
@@ -71,7 +77,7 @@ def create_table(data):
 
 def get_user(arg):
     """Вывод списка пользователей gitlab"""
-    response = requests.get(f"{arg.get}/api/v4/users?private_token={arg.token}&per_page=100")
+    response = requests.get(f"{arg.url}/api/v4/users?private_token={arg.token}&per_page=100")
 
     if response.status_code != 200:
         raise Exception(f"Ошибка: {str(response.status_code)}")
@@ -98,7 +104,7 @@ def set_user(arg):
 
     for todo in todos:
         password = generate_pass(10)
-        response = requests.post(f"{arg.set}/api/v4/users?private_token={arg.token}",
+        response = requests.post(f"{arg.url}/api/v4/users?private_token={arg.token}",
                                  {'email': todo['email'], 'name': todo['name'],
                                   'username': todo['username'], 'password': password,
                                   'skip_confirmation': 'true'})
@@ -115,7 +121,7 @@ def main():
     """Передача аргументов командной строки исполняемой функции"""
     parsers = create_args()
     args = parsers.parse_args()
-    if args.get is not None:
+    if args.operation == 'g':
         user_data, other_url = get_user(args)
         table = create_table(user_data)
         if args.file is None:
@@ -127,8 +133,11 @@ def main():
         print(table)
         print(f"Количество пользователей с web_url,"
               f" отличающимся от gitwork.ru ---> {str(other_url)}")
-    elif args.set is not None:
-        create_file('users-pass', 'json', set_user(args))
+    elif args.operation == 's':
+        if args.file is not None:
+            create_file('users-pass', 'json', set_user(args))
+        else:
+            print("Укажите файл со списком пользователей, которых необходимо создать!")
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@
 
 Примеры запуска:
 python3 gitlab_user_sync.py -f out_file g yhQvz2QsqXbxakY-zEqC
-gitlab_user_sync.py -f users-data.json s yhQvz2QsqXbxakY-zEqC
+python3 gitlab_user_sync.py -f users-data.json s yhQvz2QsqXbxakY-zEqC
 """
 import random
 import json

@@ -26,7 +26,7 @@ def create_args():
         type=str,
     )
     parser.add_argument(
-        '-t', '--token',
+        'token',
         help='input root_token',
         type=str,
     )
@@ -98,17 +98,14 @@ def main():
     parsers = create_args()
     args = parsers.parse_args()
     domen = "@gitwork.ru"
-    if args.token is not None:
-        users = get_user(args, domen)
-        error_users = correct_email(args, users, domen)
-        print(f"Email адрес успешно изменен у {len(users) - len(error_users)}"
-              f" пользователей из {len(users)}")
-        if len(error_users) != 0:
-            print("Список пользователей у которых не удалось изменить email: ")
-            for error in error_users:
-                print(error['username'])
-    else:
-        print("Не введен токен")
+    users = get_user(args, domen)
+    error_users = correct_email(args, users, domen)
+    print(f"Email адрес успешно изменен у {len(users) - len(error_users)}"
+          f" пользователей из {len(users)}")
+    if len(error_users) != 0:
+        print("Список пользователей у которых не удалось изменить email: ")
+        for error in error_users:
+            print(error['username'])
 
 
 if __name__ == '__main__':

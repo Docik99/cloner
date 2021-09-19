@@ -14,7 +14,15 @@ from prettytable import PrettyTable
 
 
 def generate_pass(length):
-    """Создание пароля"""
+    """Создание пароля
+
+    Аргументы:
+        length: длина пароля
+
+    Возвращаемые значения:
+        password: сгенерированный пароль
+
+    """
     if length <= 0:
         raise Exception("Length of password must be int > 0")
 
@@ -26,7 +34,12 @@ def generate_pass(length):
 
 
 def create_args():
-    """Создание аргументов командной строки"""
+    """Создание аргументов командной строки
+
+    Возвращаемые значения:
+        parser: парсер введенных аргументов
+
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'operation',
@@ -53,7 +66,14 @@ def create_args():
 
 
 def create_file(file_name, file_format, data):
-    """Создает файл с заданым именем, форматом и записывает туда данные"""
+    """Создает файл с заданым именем, форматом и записывает туда данные
+
+    Аргументы:
+        file_name: название файла, который необходимо создать
+        file_format: формат файла, который необходисо создать
+        data: данные, которые необходимо записать в этот файл
+
+    """
     if file_format == 'json':
         f_json = open(f"{file_name}.{file_format}", "w")
         json.dump(data, f_json)
@@ -67,7 +87,15 @@ def create_file(file_name, file_format, data):
 
 
 def create_table(data):
-    """Создает таблицу с данными пользователей"""
+    """Создает таблицу с данными пользователей
+
+    Аргументы:
+        data: данные, которые необходимо внести в таблицу
+
+    Возвращаемые значения:
+        table: таблица с переданными данными
+
+    """
     head = ['email', 'login (name)', 'fullname (username)']
     table = PrettyTable(head)
     for user in data:
@@ -77,7 +105,16 @@ def create_table(data):
 
 
 def get_user(arg):
-    """Вывод списка пользователей gitlab"""
+    """Вывод списка пользователей gitlab
+
+    Аргументы:
+        arg: аргументы командной строки
+
+    Возвращаемые значения:
+        data_w: данные пользователей, которые необходимо записать в файл
+        other_web_url: количество пользователей с доменом отличающимся от gitwork.ru
+
+    """
     response = requests.get(f"{arg.url}/api/v4/users?private_token={arg.token}&per_page=100")
 
     if response.status_code != 200:
@@ -98,7 +135,15 @@ def get_user(arg):
 
 
 def set_user(arg):
-    """Создание новых пользователей по данным из json файла"""
+    """Создание новых пользователей по данным из json файла
+
+    Аргументы:
+        arg: аргументы командной строки
+
+    Возвращаемые значения:
+        data_w: данные новых пользователей (логин - пароль), которые необходимо записать в файл
+
+    """
     f_json = open(arg.file, 'r')
     todos = json.load(f_json)
     data_w = []
@@ -119,7 +164,7 @@ def set_user(arg):
 
 
 def main():
-    """Передача аргументов командной строки исполняемой функции"""
+    """Передача аргументов командной строки исполняемым функциям"""
     parsers = create_args()
     args = parsers.parse_args()
     if args.operation == 'g':

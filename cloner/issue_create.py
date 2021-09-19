@@ -15,16 +15,17 @@ def create_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-u', '--url',
-        help='input hostname',
+        help='input hostname (default "https://gitwork.ru")',
+        default='https://gitwork.ru',
         type=str,
     )
     parser.add_argument(
-        '-t', '--token',
+        'token',
         help='input root_token',
         type=str,
     )
     parser.add_argument(
-        '-f', '--file',
+        'file',
         help='input way to file',
         type=str,
     )

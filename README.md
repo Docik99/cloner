@@ -9,17 +9,37 @@
 ##### Получение списка пользователей
 `$ docker run cloner gitlab_user_sync.py -g https://gitlab.ru -t yhQvz2QsqXbxakY-zEqC -f out_file`
 
+###### Флаги:
+
+-g (--get) Обозначает необходимость получения списка пользователей
+
+-t (--token) Позволяет передать token пользователя, от чьего имени выполняются действия
+
 out_file.json - файл, в котрый будут выведены данные пользователей (**-f** опциональный флаг)
 
 ##### Создание новых пользователей из данных, содержащихся в файле 
-`$ docker run cloner gitlab_user_sync.py -s https://gitlab.ru-t yhQvz2QsqXbxakY-zEqC -f users-data`
+`$ docker run cloner gitlab_user_sync.py -s https://gitlab.ru -t yhQvz2QsqXbxakY-zEqC -f users-data`
+
+###### Флаги:
+
+-s (--set) Обозначает необходимость создания пользователей
+
+-t (--token) Позволяет передать token пользователя, от чьего имени выполняются действия
 
 users-data.json - файл, содержащий данные, необходимые для создания новых пользователей
 
 ##### Создание issue с новым паролем
-`$ docker run cloner issue_create.py -s https://gitlab.ru -t yhQvz2QsqXbxakY-zEqC -f users-pass.json`
+`$ docker run cloner issue_create.py -u https://gitlab.ru -t yhQvz2QsqXbxakY-zEqC -f users-pass.json`
 
-users-pass.json - файл содержаший пару логин-пароль
+Флаги:
+
+-u (--url) Адрес хоста, к которому необходимо подключиться
+
+-t (--token) Позволяет передать token пользователя, от чьего имени выполняются действия
+
+-f (--file) Позволяет указать путь к файлу
+
+users-pass.json - файл, содержаший пару логин-пароль
 
 Где  **yhQvz2QsqXbxakY-zEqC** токен root пользователя, а **https://gitlab.ru** адрес хоста (**-g** и **-s** опциональные флаги, по умолчанию: https://gitwork.ru)
 ##### Для запуска pylint

@@ -7,11 +7,21 @@
 #### Запуск образа
 
 ##### Получение списка пользователей
-`$ docker run cloner gitlab_user_sync.py -g https://gitlab.ru -t yhQvz2QsqXbxakY-zEqC -f out_file`
+`$ docker run cloner gitlab_user_sync.py g yhQvz2QsqXbxakY-zEqC -f out_file`
+
+`usage: gitlab_user_sync.py [-h] [-u URL] [-f FILE] operation token
+
+positional arguments:
+  operation             input "g" for get users or "s" for create users
+  token                 input root_token
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -u URL, --url URL     input hostname
+  -f FILE, --file FILE  input way to file (required flag if operation = s)`
 
 ###### Флаги:
 
--g (--get) Обозначает необходимость получения списка пользователей
 
 -t (--token) Позволяет передать token пользователя, от чьего имени выполняются действия
 

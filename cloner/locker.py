@@ -43,7 +43,7 @@ def lock_user(arg):
         arg: аргументы командной строки
 
     """
-    global user_id
+    user_id = 0
     f_json = open(arg.file, 'r') #файл, содержащий name пользователей
     todos = json.load(f_json)
     count_users = 0
